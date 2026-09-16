@@ -1,0 +1,973 @@
+* {
+    box-sizing: border-box;
+}
+
+
+:root {
+    --background: #06101f;
+    --panel: #0d1930;
+    --panel-light: #12213e;
+    --border: #263958;
+    --accent: #12d5bb;
+    --text: #ffffff;
+    --muted: #9db1d2;
+    --table-text: #dbe5f5;
+    --danger: #ff6d7a;
+}
+
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    background: var(--background);
+
+    color: var(--text);
+}
+
+
+.header {
+    min-height: 145px;
+
+    padding: 30px 42px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 25px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #071122,
+            #0d1930
+        );
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+
+.title h1 {
+    margin: 0;
+
+    font-size: 48px;
+
+    line-height: 1.1;
+}
+
+
+.liveData {
+    min-width: 260px;
+
+    padding: 16px 22px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+
+    border:
+        1px solid var(--accent);
+
+    border-radius: 14px;
+
+    background:
+        rgba(18, 213, 187, 0.07);
+}
+
+
+.liveData strong {
+    color: var(--accent);
+
+    font-size: 20px;
+}
+
+
+.liveData span {
+    color: var(--table-text);
+
+    font-size: 14px;
+}
+
+
+.pageNav {
+    display: flex;
+
+    gap: 16px;
+
+    padding:
+        25px 42px 0;
+}
+
+
+.pageButton {
+    min-width: 145px;
+
+    padding: 14px 24px;
+
+    border-radius: 13px;
+
+    border:
+        1px solid var(--border);
+
+    background: var(--panel);
+
+    color: var(--muted);
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+.pageButton.active {
+    background: var(--accent);
+
+    color: #03101a;
+
+    border-color: var(--accent);
+}
+
+
+.filters {
+    margin:
+        28px 42px 0;
+
+    padding: 25px;
+
+    display: grid;
+
+    grid-template-columns:
+        1.05fr
+        0.9fr
+        0.9fr
+        1.2fr
+        1.2fr
+        auto;
+
+    gap: 18px;
+
+    align-items: end;
+
+    background: var(--panel);
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 18px;
+}
+
+
+.filterGroup {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+
+.filterGroup label {
+    color: var(--muted);
+
+    font-weight: bold;
+
+    font-size: 14px;
+}
+
+
+.filterGroup select,
+.filterGroup input,
+#overviewSearch,
+#nurseSearch {
+    width: 100%;
+
+    padding: 14px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 11px;
+
+    background: var(--background);
+
+    color: var(--text);
+
+    font-size: 14px;
+
+    outline: none;
+}
+
+
+.filterGroup select:focus,
+.filterGroup input:focus,
+#overviewSearch:focus,
+#nurseSearch:focus {
+    border-color: var(--accent);
+}
+
+
+#clearFiltersBtn {
+    padding: 15px 23px;
+
+    border-radius: 13px;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    background: transparent;
+
+    color: var(--accent);
+
+    border:
+        1px solid var(--accent);
+}
+
+
+#clearFiltersBtn:hover {
+    background:
+        rgba(18, 213, 187, 0.1);
+}
+
+
+.dashboard {
+    padding:
+        38px 42px 55px;
+}
+
+
+.hidden {
+    display: none !important;
+}
+
+
+.kpiGrid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(5, minmax(0, 1fr));
+
+    gap: 24px;
+}
+
+
+.nurseKpiGrid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 24px;
+}
+
+
+.kpiCard {
+    min-height: 185px;
+
+    padding: 28px;
+
+    background:
+        linear-gradient(
+            145deg,
+            var(--panel),
+            var(--panel-light)
+        );
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 18px;
+}
+
+
+.kpiCard p {
+    margin:
+        0 0 24px;
+
+    color: var(--muted);
+
+    font-size: 18px;
+
+    font-weight: bold;
+}
+
+
+.kpiCard h2 {
+    margin: 0;
+
+    color: var(--accent);
+
+    font-size: 50px;
+}
+
+
+.chartGrid {
+    margin-top: 32px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 26px;
+}
+
+
+.chartCard {
+    min-width: 0;
+
+    padding: 25px;
+
+    background: var(--panel);
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 18px;
+}
+
+
+.chartCard.fullWidth {
+    grid-column:
+        1 / -1;
+}
+
+
+.chartCard h3 {
+    margin:
+        0 0 22px;
+
+    font-size: 21px;
+}
+
+
+.chartContainer {
+    position: relative;
+
+    width: 100%;
+
+    height: 365px;
+}
+
+
+.tableCard {
+    margin-top: 32px;
+
+    padding: 25px;
+
+    background: var(--panel);
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 18px;
+}
+
+
+.tableHeader {
+    margin-bottom: 20px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 20px;
+}
+
+
+.tableHeader h3 {
+    margin: 0;
+
+    font-size: 21px;
+}
+
+
+.tableHeader p {
+    margin:
+        7px 0 0;
+
+    color: var(--muted);
+
+    font-size: 13px;
+}
+
+
+#overviewSearch,
+#nurseSearch {
+    max-width: 380px;
+}
+
+
+.tableWrapper {
+    width: 100%;
+
+    max-height: 600px;
+
+    overflow: auto;
+}
+
+
+table {
+    width: 100%;
+
+    min-width: 950px;
+
+    border-collapse: collapse;
+}
+
+
+th,
+td {
+    padding: 14px 15px;
+
+    text-align: left;
+
+    border-bottom:
+        1px solid var(--border);
+
+    vertical-align: top;
+}
+
+
+th {
+    position: sticky;
+
+    top: 0;
+
+    z-index: 2;
+
+    background: var(--panel);
+
+    color: var(--accent);
+
+    font-size: 13px;
+}
+
+
+td {
+    color: var(--table-text);
+
+    font-size: 13px;
+}
+
+
+tbody tr:hover {
+    background:
+        rgba(18, 213, 187, 0.06);
+}
+
+
+.typeBadge {
+    display: inline-block;
+
+    min-width: 65px;
+
+    padding: 5px 10px;
+
+    border-radius: 20px;
+
+    text-align: center;
+
+    font-size: 12px;
+
+    font-weight: bold;
+}
+
+
+.nurseBadge {
+    background:
+        rgba(18, 213, 187, 0.16);
+
+    color: var(--accent);
+}
+
+
+.botBadge {
+    background:
+        rgba(157, 177, 210, 0.16);
+
+    color: #bed0eb;
+}
+
+
+.emptyMessage {
+    padding: 35px;
+
+    text-align: center;
+
+    color: var(--muted);
+}
+
+
+.errorMessage {
+    position: fixed;
+
+    right: 24px;
+
+    bottom: 24px;
+
+    max-width: 520px;
+
+    padding: 17px 20px;
+
+    border-radius: 14px;
+
+    background: #4a1b25;
+
+    color: #ffd8dd;
+
+    border:
+        1px solid var(--danger);
+
+    z-index: 999;
+}
+
+
+@media (max-width: 1250px) {
+
+    .filters {
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+
+
+    .kpiGrid {
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+
+}
+
+
+@media (max-width: 900px) {
+
+    .header {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+
+    .filters {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+
+    .kpiGrid,
+    .nurseKpiGrid,
+    .chartGrid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .chartCard.fullWidth {
+        grid-column: auto;
+    }
+
+
+    .tableHeader {
+        align-items: stretch;
+
+        flex-direction: column;
+    }
+
+
+    #overviewSearch,
+    #nurseSearch {
+        max-width: none;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .header,
+    .dashboard {
+        padding-left: 18px;
+
+        padding-right: 18px;
+    }
+
+
+    .pageNav {
+        padding-left: 18px;
+
+        padding-right: 18px;
+    }
+
+
+    .filters {
+        margin-left: 18px;
+
+        margin-right: 18px;
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .title h1 {
+        font-size: 36px;
+    }
+
+}
+
+/* ============================================================
+   485 PRACTICE ENROLLMENT PAGE
+   Uses the same dark navy + teal design as the 485 Upload pages.
+   ============================================================ */
+
+.practice485Dashboard {
+    background: var(--background);
+    color: var(--text);
+}
+
+.practice485KpiGrid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.practice485KpiCard {
+    min-height: 185px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    text-align: left;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background: linear-gradient(145deg, var(--panel), var(--panel-light));
+    color: var(--text);
+    cursor: pointer;
+    box-shadow: none;
+    transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+}
+
+.practice485KpiCard:hover,
+.practice485KpiCard.active {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+    background: linear-gradient(145deg, #10233b, #15304a);
+}
+
+.practice485KpiCard.active {
+    box-shadow: 0 0 0 2px rgba(18, 213, 187, 0.14);
+}
+
+.practice485Icon {
+    width: 54px;
+    height: 54px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: rgba(18, 213, 187, 0.08);
+    font-size: 26px;
+}
+
+.practice485IconBlue,
+.practice485IconGreen,
+.practice485IconPurple,
+.practice485IconOrange,
+.practice485IconRed {
+    background: rgba(18, 213, 187, 0.08);
+}
+
+.practice485Label {
+    color: var(--muted);
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.practice485Value {
+    color: var(--accent);
+    font-size: 50px;
+    line-height: 1;
+    font-weight: 800;
+}
+
+.practice485Blue,
+.practice485Green,
+.practice485Purple,
+.practice485Orange {
+    color: var(--accent);
+}
+
+.practice485Red {
+    color: var(--danger);
+}
+
+.practice485Hint {
+    margin-top: auto;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.practice485SummaryGrid {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 26px;
+}
+
+.practice485Panel {
+    min-width: 0;
+    padding: 25px;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background: var(--panel);
+    color: var(--text);
+    box-shadow: none;
+}
+
+.practice485Panel h3 {
+    margin: 0;
+    color: var(--text);
+    font-size: 21px;
+}
+
+.practice485PanelTitleRow {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+}
+
+.practice485PanelTitleRow span {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.practice485ChartWrap {
+    position: relative;
+    width: 100%;
+    height: 365px;
+    max-width: 560px;
+    margin: 12px auto 0;
+}
+
+.practice485AcoDetail {
+    margin-top: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.practice485AcoRow {
+    width: 100%;
+    padding: 15px 16px;
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    align-items: center;
+    gap: 14px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--background);
+    color: var(--table-text);
+    cursor: pointer;
+    text-align: left;
+}
+
+.practice485AcoRow:hover,
+.practice485AcoRow.active {
+    border-color: var(--accent);
+    background: rgba(18, 213, 187, 0.08);
+}
+
+.practice485AcoDot {
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+}
+
+.practice485AcoName {
+    color: var(--table-text);
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.practice485AcoCount {
+    color: var(--text);
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.practice485AcoPct {
+    min-width: 58px;
+    text-align: right;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.practice485FilterPanel {
+    margin-top: 28px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1.7fr auto;
+    gap: 16px;
+    align-items: end;
+}
+
+.practice485FilterGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.practice485FilterGroup label {
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.practice485FilterGroup select,
+.practice485FilterGroup input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    background: var(--background);
+    color: var(--text);
+    font-size: 14px;
+    outline: none;
+}
+
+.practice485FilterGroup select:focus,
+.practice485FilterGroup input:focus {
+    border-color: var(--accent);
+}
+
+#practice485ClearFilters {
+    padding: 15px 23px;
+    border: 1px solid var(--accent);
+    border-radius: 13px;
+    background: transparent;
+    color: var(--accent);
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+#practice485ClearFilters:hover {
+    background: rgba(18, 213, 187, 0.1);
+}
+
+.practice485TablePanel {
+    margin-top: 28px;
+}
+
+.practice485TableHeader {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.practice485TableHeader p {
+    margin: 7px 0 0;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.practice485TableWrapper {
+    width: 100%;
+    max-height: 620px;
+    overflow: auto;
+}
+
+.practice485Table {
+    min-width: 1180px;
+}
+
+.practice485Table th {
+    background: var(--panel);
+    color: var(--accent);
+}
+
+.practice485Table td {
+    color: var(--table-text);
+}
+
+.practice485Table tbody tr:hover {
+    background: rgba(18, 213, 187, 0.06);
+}
+
+.practice485StatusBadge,
+.practice485EmrBadge {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.practice485StatusEnrolled {
+    background: rgba(18, 213, 187, 0.14);
+    color: var(--accent);
+}
+
+.practice485StatusNotEnrolled,
+.practice485StatusPending,
+.practice485StatusOther,
+.practice485StatusInactive {
+    background: rgba(157, 177, 210, 0.14);
+    color: #bed0eb;
+}
+
+.practice485StatusRefused {
+    background: rgba(255, 109, 122, 0.14);
+    color: var(--danger);
+}
+
+.practice485EmrYes {
+    background: rgba(18, 213, 187, 0.14);
+    color: var(--accent);
+}
+
+.practice485EmrNurses {
+    display: block;
+    margin-top: 5px;
+    color: var(--muted);
+    font-size: 11px;
+}
+
+@media (max-width: 1250px) {
+    .practice485KpiGrid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .practice485FilterPanel {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .practice485KpiGrid,
+    .practice485SummaryGrid,
+    .practice485FilterPanel {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .practice485KpiCard {
+        min-height: 165px;
+    }
+}

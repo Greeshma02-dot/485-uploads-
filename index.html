@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>485 Upload Dashboard</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+    <header class="header">
+
+        <div class="title">
+            <h1>485 Upload Dashboard</h1>
+        </div>
+
+        <div class="liveData">
+            <strong>Live Data</strong>
+
+            <span id="lastUpdated">
+                Loading...
+            </span>
+        </div>
+
+    </header>
+
+
+    <nav class="pageNav">
+
+        <button
+            class="pageButton active"
+            data-page="overview"
+        >
+            Overview
+        </button>
+
+        <button
+            class="pageButton"
+            data-page="nurses"
+        >
+            Nurses Only
+        </button>
+
+        <button
+            class="pageButton"
+            data-page="enrollment485"
+        >
+            485 Practice Enrollment
+        </button>
+
+    </nav>
+
+
+    <section class="filters" id="uploadFilters">
+
+        <div class="filterGroup">
+
+            <label for="acoFilter">
+                ACO
+            </label>
+
+            <select id="acoFilter">
+
+                <option value="All">
+                    All ACOs
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="filterGroup">
+
+            <label for="startDate">
+                Start Date
+            </label>
+
+            <input
+                type="date"
+                id="startDate"
+            >
+
+        </div>
+
+
+        <div class="filterGroup">
+
+            <label for="endDate">
+                End Date
+            </label>
+
+            <input
+                type="date"
+                id="endDate"
+            >
+
+        </div>
+
+
+        <div class="filterGroup">
+
+            <label for="nurseFilter">
+                Nurse / Uploaded By
+            </label>
+
+            <select id="nurseFilter">
+
+                <option value="All">
+                    All Nurses / Uploaders
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="filterGroup">
+
+            <label for="practiceFilter">
+                Practice
+            </label>
+
+            <select id="practiceFilter">
+
+                <option value="All">
+                    All Practices
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <button id="clearFiltersBtn">
+            Clear Filters
+        </button>
+
+    </section>
+
+
+    <!-- OVERVIEW PAGE -->
+
+    <main
+        id="overviewPage"
+        class="dashboard"
+    >
+
+        <section class="kpiGrid">
+
+            <div class="kpiCard">
+
+                <p>
+                    Total 485 Uploads
+                </p>
+
+                <h2 id="totalUploads">
+                    0
+                </h2>
+
+            </div>
+
+
+            <div class="kpiCard">
+
+                <p>
+                    Nurse Uploads
+                </p>
+
+                <h2 id="nurseUploads">
+                    0
+                </h2>
+
+            </div>
+
+
+            <div class="kpiCard">
+
+                <p>
+                    BOT Uploads
+                </p>
+
+                <h2 id="botUploads">
+                    0
+                </h2>
+
+            </div>
+
+
+            <div class="kpiCard">
+
+                <p>
+                    Nurse Percentage
+                </p>
+
+                <h2 id="nursePercent">
+                    0%
+                </h2>
+
+            </div>
+
+
+            <div class="kpiCard">
+
+                <p>
+                    BOT Percentage
+                </p>
+
+                <h2 id="botPercent">
+                    0%
+                </h2>
+
+            </div>
+
+        </section>
+
+
+        <section class="chartGrid">
+
+            <div class="chartCard">
+
+                <h3>
+                    Monthly Nurse vs BOT Uploads
+                </h3>
+
+                <div class="chartContainer">
+
+                    <canvas id="monthlyChart"></canvas>
+
+                </div>
+
+            </div>
+
+
+            <div class="chartCard">
+
+                <h3>
+                    Uploads by ACO
+                </h3>
+
+                <div class="chartContainer">
+
+                    <canvas id="acoChart"></canvas>
+
+                </div>
+
+            </div>
+
+
+            <div class="chartCard">
+
+                <h3>
+                    Uploads by Nurse
+                </h3>
+
+                <div class="chartContainer">
+
+                    <canvas id="nurseChart"></canvas>
+
+                </div>
+
+            </div>
+
+
+            <div class="chartCard">
+
+                <h3>
+                    Top Practices
+                </h3>
+
+                <div class="chartContainer">
+
+                    <canvas id="practiceChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="tableCard">
+
+            <div class="tableHeader">
+
+                <div>
+
+                    <h3>
+                        485 Upload Details
+                    </h3>
+
+                    <p id="overviewCount">
+                        Showing 0 records
+                    </p>
+
+                </div>
+
+
+                <input
+                    type="text"
+                    id="overviewSearch"
+                    placeholder="Search practice, nurse, ACO or status..."
+                >
+
+            </div>
+
+
+            <div class="tableWrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Date</th>
+
+                            <th>ACO</th>
+
+                            <th>Practice</th>
+
+                            <th>Uploaded By</th>
+
+                            <th>Type</th>
+
+                            <th>Status</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="overviewTableBody"></tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- NURSES ONLY PAGE -->
+
+    <main
+        id="nursesPage"
+        class="dashboard hidden"
+    >
+
+        <section class="nurseKpiGrid">
+
+            <div class="kpiCard">
+
+                <p>
+                    Total Nurse Uploads
+                </p>
+
+                <h2 id="nursePageTotal">
+                    0
+                </h2>
+
+            </div>
+
+
+            <div class="kpiCard">
+
+                <p>
+                    Active Nurses
+                </p>
+
+                <h2 id="activeNurses">
+                    0
+                </h2>
+
+            </div>
+
+
+            <div class="kpiCard">
+
+                <p>
+                    Practices Covered
+                </p>
+
+                <h2 id="nursePractices">
+                    0
+                </h2>
+
+            </div>
+
+
+            <div class="kpiCard">
+
+                <p>
+                    ACOs Covered
+                </p>
+
+                <h2 id="nurseAcos">
+                    0
+                </h2>
+
+            </div>
+
+        </section>
+
+
+        <section class="chartGrid">
+
+            <div class="chartCard">
+
+                <h3>
+                    Nurse Uploads by User
+                </h3>
+
+                <div class="chartContainer">
+
+                    <canvas id="nurseOnlyChart"></canvas>
+
+                </div>
+
+            </div>
+
+
+            <div class="chartCard">
+
+                <h3>
+                    Nurse Uploads by Practice
+                </h3>
+
+                <div class="chartContainer">
+
+                    <canvas id="nursePracticeChart"></canvas>
+
+                </div>
+
+            </div>
+
+
+            <div class="chartCard fullWidth">
+
+                <h3>
+                    Monthly Nurse Upload Trend
+                </h3>
+
+                <div class="chartContainer">
+
+                    <canvas id="nurseTrendChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="tableCard">
+
+            <div class="tableHeader">
+
+                <div>
+
+                    <h3>
+                        Nurse Upload Details
+                    </h3>
+
+                    <p id="nurseCount">
+                        Showing 0 records
+                    </p>
+
+                </div>
+
+
+                <input
+                    type="text"
+                    id="nurseSearch"
+                    placeholder="Search nurse, practice, ACO or status..."
+                >
+
+            </div>
+
+
+            <div class="tableWrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Date</th>
+
+                            <th>ACO</th>
+
+                            <th>Practice</th>
+
+                            <th>Uploaded By</th>
+
+                            <th>Status</th>
+
+                            <th>Review Source</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="nurseTableBody"></tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- 485 PRACTICE ENROLLMENT PAGE -->
+
+    <main
+        id="enrollment485Page"
+        class="dashboard practice485Dashboard hidden"
+    >
+
+        <section class="practice485KpiGrid">
+
+            <button class="practice485KpiCard" data-485-card-filter="all" type="button">
+                <span class="practice485Icon practice485IconBlue">📋</span>
+                <span class="practice485Label">Total 485 Practices</span>
+                <strong id="practice485Total" class="practice485Value practice485Blue">0</strong>
+                <span class="practice485Hint">Click to view all →</span>
+            </button>
+
+            <button class="practice485KpiCard" data-485-card-filter="enrolled" type="button">
+                <span class="practice485Icon practice485IconGreen">✅</span>
+                <span class="practice485Label">Enrolled</span>
+                <strong id="practice485Enrolled" class="practice485Value practice485Green">0</strong>
+                <span id="practice485EnrolledPct" class="practice485Hint">0% of total →</span>
+            </button>
+
+            <button class="practice485KpiCard" data-485-card-filter="emr" type="button">
+                <span class="practice485Icon practice485IconPurple">💻</span>
+                <span class="practice485Label">EMR Access</span>
+                <strong id="practice485Emr" class="practice485Value practice485Purple">0</strong>
+                <span class="practice485Hint">Have EMR access →</span>
+            </button>
+
+            <button class="practice485KpiCard" data-485-card-filter="not enrolled" type="button">
+                <span class="practice485Icon practice485IconOrange">⏳</span>
+                <span class="practice485Label">Not Enrolled</span>
+                <strong id="practice485NotEnrolled" class="practice485Value practice485Orange">0</strong>
+                <span class="practice485Hint">Needs follow up →</span>
+            </button>
+
+            <button class="practice485KpiCard" data-485-card-filter="refused" type="button">
+                <span class="practice485Icon practice485IconRed">❌</span>
+                <span class="practice485Label">Refused</span>
+                <strong id="practice485Refused" class="practice485Value practice485Red">0</strong>
+                <span class="practice485Hint">Will not participate →</span>
+            </button>
+
+        </section>
+
+
+        <section class="practice485SummaryGrid">
+
+            <div class="practice485Panel">
+                <h3>Practices by ACO Program</h3>
+                <div class="practice485ChartWrap">
+                    <canvas id="practice485AcoChart"></canvas>
+                </div>
+            </div>
+
+            <div class="practice485Panel">
+                <div class="practice485PanelTitleRow">
+                    <h3>ACO Program Detail</h3>
+                    <span>(click to filter)</span>
+                </div>
+                <div id="practice485AcoDetail" class="practice485AcoDetail"></div>
+            </div>
+
+        </section>
+
+
+        <section class="practice485Panel practice485FilterPanel">
+
+            <div class="practice485FilterGroup">
+                <label for="practice485AcoFilter">ACO Program</label>
+                <select id="practice485AcoFilter">
+                    <option value="All">All ACOs</option>
+                </select>
+            </div>
+
+            <div class="practice485FilterGroup">
+                <label for="practice485StatusFilter">Status</label>
+                <select id="practice485StatusFilter">
+                    <option value="All">All Statuses</option>
+                </select>
+            </div>
+
+            <div class="practice485FilterGroup">
+                <label for="practice485ConsultantFilter">Provider Consultant</label>
+                <select id="practice485ConsultantFilter">
+                    <option value="All">All Consultants</option>
+                </select>
+            </div>
+
+            <div class="practice485FilterGroup practice485SearchGroup">
+                <label for="practice485Search">Search Practice</label>
+                <input
+                    id="practice485Search"
+                    type="text"
+                    placeholder="Search practice, consultant, EMR, format or notes..."
+                >
+            </div>
+
+            <button id="practice485ClearFilters" type="button">
+                Clear Filters
+            </button>
+
+        </section>
+
+
+        <section class="practice485Panel practice485TablePanel">
+
+            <div class="practice485TableHeader">
+                <div>
+                    <h3>485 Practice Enrollment Detail</h3>
+                    <p id="practice485Count">Showing 0 practices</p>
+                </div>
+            </div>
+
+            <div class="practice485TableWrapper">
+                <table class="practice485Table">
+                    <thead>
+                        <tr>
+                            <th>ACO</th>
+                            <th>Practice</th>
+                            <th>Status</th>
+                            <th>Intake</th>
+                            <th>Format</th>
+                            <th>EMR Access</th>
+                            <th>Provider Consultant</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody id="practice485TableBody"></tbody>
+                </table>
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <div
+        id="errorMessage"
+        class="errorMessage hidden"
+    ></div>
+
+
+    <script src="data.js"></script>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
